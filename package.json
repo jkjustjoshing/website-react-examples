@@ -1,45 +1,39 @@
 {
-  "name": "website-react-examples",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:GetStream/website-react-examples.git",
-  "author": "Stream",
-  "license": "MIT",
-  "scripts": {
-    "build:cs": "cd customer-support && yarn && yarn build && rm -rf ../docs/customer-support/* && mv build/* ../docs/customer-support",
-    "build:sm": "cd social-messenger-ts && yarn && yarn build && rm -rf ../docs/social-messenger/* && mv build/* ../docs/social-messenger",
-    "build:ve": "cd virtual-event-old && yarn && yarn build && rm -rf ../docs/virtual-event/* && mv build/* ../docs/virtual-event",
-    "build:ve2": "cd virtual-event && yarn && yarn build && rm -rf ../docs/virtual-event-v2/* && mv build/* ../docs/virtual-event-v2",
-    "build:t": "cd team-ts && yarn && yarn build && rm -rf ../docs/team/* && mv build/* ../docs/team",
-    "build:gl": "cd gaming-livestream && yarn && yarn build && rm -rf ../docs/gaming-livestream/* && mv build/* ../docs/gaming-livestream",
-    "build:js": "yarn build:cs && yarn build:sm && yarn build:ve && yarn build:t && yarn build:gl && yarn build:ve2",
-    "build:js:public": "yarn build:sm && yarn build:t && yarn build:gl && yarn build:ve2",
-    "lint": "eslint",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start:gaming-livestream": "cd gaming-livestream && yarn start",
-    "start:social-messenger-ts": "cd social-messenger-ts && yarn start",
-    "start:team-ts": "cd team-ts && yarn start",
-    "start:virtual-event": "cd virtual-event && yarn start"
+  "name": "@stream-io/social-messenger-demo",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@stream-io/stream-chat-css": "^2.10.0",
+    "lodash.debounce": "^4.0.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-file-utils": "^1.2.0",
+    "stream-chat": "8.5.0",
+    "stream-chat-react": "^10.8.1"
   },
   "devDependencies": {
-    "eslint": "^7.6.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-babel": "^5.3.1",
-    "eslint-plugin-cypress": "^2.11.2",
-    "eslint-plugin-flowtype": "^5.2.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.20.0",
-    "eslint-plugin-jest-dom": "^3.2.2",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.20.6",
-    "eslint-plugin-react-hooks": "^4.0.8",
-    "prettier": "^2.0.5"
+    "@types/jest": "^27.5.2",
+    "@types/lodash.debounce": "^4.0.7",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "prettier": "^2.8.8",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.7.4"
   },
-  "dependencies": {}
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "homepage": "./",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
