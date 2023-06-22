@@ -18,7 +18,15 @@ type AppProps = Pick<StreamAppProps, "apiKey">;
 
 const App = (props: AppProps) => {
   return (
-    <div style={{ ...flex, overflowY: "scroll", paddingRight: 20 }}>
+    <div
+      style={{
+        ...flex,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        overflowY: "scroll",
+        paddingRight: 20,
+      }}
+    >
       {users.map((user, index) => {
         const userToken = user.token;
 
@@ -32,13 +40,14 @@ const App = (props: AppProps) => {
         return (
           <div
             style={{
-              background: index % 2 ? "#444" : "#fff",
+              background: index === 2 || index === 1 ? "#444" : "#fff",
               ...flex,
+              width: "50%",
             }}
           >
             <h2
               style={{
-                color: index % 2 ? "#fff" : "#333",
+                color: index === 2 || index === 1 ? "#fff" : "#333",
                 textDecoration: "underline",
               }}
             >
@@ -47,7 +56,7 @@ const App = (props: AppProps) => {
             <StreamApp
               key={user.userId}
               apiKey={props.apiKey}
-              isDark={Boolean(index % 2)}
+              isDark={Boolean(index === 2 || index === 1)}
               userToConnect={userToConnect}
               userToken={userToken}
             />
