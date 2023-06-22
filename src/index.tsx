@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
 
 import App from "./App";
@@ -7,11 +7,11 @@ import App from "./App";
 const apiKey = process.env.REACT_APP_STREAM_KEY;
 
 const container = document.getElementById("root");
-const root = ReactDOM.createRoot(container!);
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <App apiKey={apiKey!} />
-  </React.StrictMode>
+  </React.StrictMode>,
+  container
 );
 
 // If you want to start measuring performance in your app, pass a function
