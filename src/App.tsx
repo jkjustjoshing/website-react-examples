@@ -1,11 +1,11 @@
 import { getImage } from "./assets";
-import React, { useMemo, useState } from "react";
 import "stream-chat-react/dist/css/v2/index.css";
 import "./styles/index.css";
 
 import { users } from "./config";
 
-import { StreamApp, type StreamAppProps } from "./StreamApp";
+import { StreamApp } from "./StreamApp";
+import type { StreamAppProps } from "./StreamApp";
 
 const flex = {
   display: "flex",
