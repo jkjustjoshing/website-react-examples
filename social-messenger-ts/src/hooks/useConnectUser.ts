@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   DefaultGenerics,
   ExtendableGenerics,
@@ -6,7 +6,7 @@ import {
   StreamChat,
   TokenOrProvider,
   UserResponse,
-} from 'stream-chat';
+} from "stream-chat";
 
 /**
  * A hook which handles the process of connecting/disconnecting a user
@@ -16,10 +16,12 @@ import {
  * @param userToConnect the user information.
  * @param userTokenOrProvider the user's token.
  */
-export const useConnectUser = <SCG extends ExtendableGenerics = DefaultGenerics>(
+export const useConnectUser = <
+  SCG extends ExtendableGenerics = DefaultGenerics
+>(
   apiKey: string,
   userToConnect: OwnUserResponse<SCG> | UserResponse<SCG>,
-  userTokenOrProvider: TokenOrProvider,
+  userTokenOrProvider: TokenOrProvider
 ) => {
   const [chatClient, setChatClient] = useState<StreamChat<SCG> | null>(null);
   useEffect(() => {

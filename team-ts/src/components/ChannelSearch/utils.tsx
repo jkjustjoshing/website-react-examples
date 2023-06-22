@@ -28,7 +28,7 @@ export const channelByUser = async (props: Props) => {
   const { client, setActiveChannel, user } = props;
 
   const filters: ChannelFilters = {
-    type: 'messaging',
+    type: 'patient-chat',
     member_count: 2,
     members: { $eq: [user.id as string, client.userID || ''] },
   };
@@ -39,7 +39,7 @@ export const channelByUser = async (props: Props) => {
     return setActiveChannel(existingChannel);
   }
 
-  const newChannel = client.channel('messaging', {
+  const newChannel = client.channel('patient-chat', {
     members: [user.id as string, client.userID || ''],
   });
   return setActiveChannel(newChannel);

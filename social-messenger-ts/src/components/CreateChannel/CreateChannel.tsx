@@ -1,19 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Avatar, useChatContext } from 'stream-chat-react';
-import type { UserResponse } from 'stream-chat';
-import _debounce from 'lodash.debounce';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Avatar, useChatContext } from "stream-chat-react";
+import type { UserResponse } from "stream-chat";
+import _debounce from "lodash.debounce";
 
-import { XButton, XButtonBackground } from '../../assets';
+import { XButton, XButtonBackground } from "../../assets";
 
-import './CreateChannel.css';
+import "./CreateChannel.css";
 
-import type { StreamChatGenerics } from '../../types';
+import type { StreamChatGenerics } from "../../types";
 
 const UserResult = ({ user }: { user: UserResponse<StreamChatGenerics> }) => (
-  <li className='messaging-create-channel__user-result'>
+  <li className="messaging-create-channel__user-result">
     <Avatar image={user.image} size={40} />
-    {user.online && <div className='messaging-create-channel__user-result-online' />}
-    <div className='messaging-create-channel__user-result__details'>
+    {user.online && (
+      <div className="messaging-create-channel__user-result-online" />
+    )}
+    <div className="messaging-create-channel__user-result__details">
       <span>{user.name}</span>
     </div>
   </li>
@@ -25,22 +27,25 @@ type Props = {
 };
 
 const CreateChannel = (props: Props) => {
+  console.log("CreateChannel", "yo");
   const { onClose, toggleMobile } = props;
 
   const { client, setActiveChannel } = useChatContext<StreamChatGenerics>();
 
   const [focusedUser, setFocusedUser] = useState<number>();
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
   const [resultsOpen, setResultsOpen] = useState(false);
   const [searchEmpty, setSearchEmpty] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState<UserResponse<StreamChatGenerics>[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<
+    UserResponse<StreamChatGenerics>[]
+  >([]);
   const [users, setUsers] = useState<UserResponse<StreamChatGenerics>[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const clearState = () => {
-    setInputText('');
+    setInputText("");
     setResultsOpen(false);
     setSearchEmpty(false);
   };
@@ -50,9 +55,9 @@ const CreateChannel = (props: Props) => {
       if (resultsOpen) clearState();
     };
 
-    document.addEventListener('click', clickListener);
+    document.addEventListener("click", clickListener);
 
-    return () => document.removeEventListener('click', clickListener);
+    return () => document.removeEventListener("click", clickListener);
   }, [resultsOpen]);
 
   const findUsers = async () => {
@@ -66,7 +71,7 @@ const CreateChannel = (props: Props) => {
           $and: [{ name: { $autocomplete: inputText } }],
         },
         { id: 1 },
-        { limit: 6 },
+        { limit: 6 }
       );
 
       if (!response.users.length) {
@@ -99,7 +104,7 @@ const CreateChannel = (props: Props) => {
 
     if (!selectedUsersIds.length || !client.userID) return;
 
-    const conversation = client.channel('messaging', {
+    const conversation = client.channel("patient-chat", {
       members: [...selectedUsersIds, client.userID],
     });
 
@@ -112,12 +117,14 @@ const CreateChannel = (props: Props) => {
   };
 
   const addUser = (addedUser: UserResponse<StreamChatGenerics>) => {
-    const isAlreadyAdded = selectedUsers.find((user) => user.id === addedUser.id);
+    const isAlreadyAdded = selectedUsers.find(
+      (user) => user.id === addedUser.id
+    );
     if (isAlreadyAdded) return;
 
     setSelectedUsers([...selectedUsers, addedUser]);
     setResultsOpen(false);
-    setInputText('');
+    setInputText("");
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -134,19 +141,19 @@ const CreateChannel = (props: Props) => {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       // check for up(ArrowUp) or down(ArrowDown) key
-      if (event.key === 'ArrowUp') {
+      if (event.key === "ArrowUp") {
         setFocusedUser((prevFocused) => {
           if (prevFocused === undefined) return 0;
           return prevFocused === 0 ? users.length - 1 : prevFocused - 1;
         });
       }
-      if (event.key === 'ArrowDown') {
+      if (event.key === "ArrowDown") {
         setFocusedUser((prevFocused) => {
           if (prevFocused === undefined) return 0;
           return prevFocused === users.length - 1 ? 0 : prevFocused + 1;
         });
       }
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         event.preventDefault();
         if (focusedUser !== undefined) {
           addUser(users[focusedUser]);
@@ -154,29 +161,33 @@ const CreateChannel = (props: Props) => {
         }
       }
     },
-    [users, focusedUser], // eslint-disable-line
+    [users, focusedUser] // eslint-disable-line
   );
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown, false);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown, false);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
+  console.log(inputRef);
+
   return (
-    <div className='messaging-create-channel'>
+    <div className="messaging-create-channel">
       <header>
-        <div className='messaging-create-channel__left'>
-          <div className='messaging-create-channel__left-text'>To: </div>
-          <div className='users-input-container'>
+        <div className="messaging-create-channel__left">
+          <div className="messaging-create-channel__left-text">To: </div>
+          <div className="users-input-container">
             {!!selectedUsers?.length && (
-              <div className='messaging-create-channel__users'>
+              <div className="messaging-create-channel__users">
                 {selectedUsers.map((user) => (
                   <div
-                    className='messaging-create-channel__user'
+                    className="messaging-create-channel__user"
                     onClick={() => removeUser(user)}
                     key={user.id}
                   >
-                    <div className='messaging-create-channel__user-text'>{user.name}</div>
+                    <div className="messaging-create-channel__user-text">
+                      {user.name}
+                    </div>
                     <XButton />
                   </div>
                 ))}
@@ -188,29 +199,31 @@ const CreateChannel = (props: Props) => {
                 ref={inputRef}
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder={!selectedUsers.length ? 'Start typing for suggestions' : ''}
-                type='text'
-                className='messaging-create-channel__input'
+                placeholder={
+                  !selectedUsers.length ? "Start typing for suggestions" : ""
+                }
+                type="text"
+                className="messaging-create-channel__input"
               />
             </form>
           </div>
-          <div className='close-mobile-create' onClick={() => toggleMobile()}>
+          <div className="close-mobile-create" onClick={() => toggleMobile()}>
             <XButtonBackground />
           </div>
         </div>
-        <button className='create-channel-button' onClick={createChannel}>
+        <button className="create-channel-button" onClick={createChannel}>
           Start chat
         </button>
       </header>
       {inputText && (
         <main>
-          <ul className='messaging-create-channel__user-results'>
+          <ul className="messaging-create-channel__user-results">
             {!!users?.length && !searchEmpty && (
               <div>
                 {users.map((user, i) => (
                   <div
                     className={`messaging-create-channel__user-result ${
-                      focusedUser === i && 'focused'
+                      focusedUser === i && "focused"
                     }`}
                     onClick={() => addUser(user)}
                     key={user.id}
@@ -226,7 +239,7 @@ const CreateChannel = (props: Props) => {
                   inputRef.current?.focus();
                   clearState();
                 }}
-                className='messaging-create-channel__user-result empty'
+                className="messaging-create-channel__user-result empty"
               >
                 No people found...
               </div>
