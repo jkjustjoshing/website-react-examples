@@ -1,5 +1,4 @@
-import React from 'react';
-import { logChatPromiseExecution } from 'stream-chat';
+import { logChatPromiseExecution } from "stream-chat";
 import {
   MessageList,
   MessageInput,
@@ -7,11 +6,11 @@ import {
   Window,
   useChannelActionContext,
   Thread,
-} from 'stream-chat-react';
+} from "stream-chat-react";
 
-import { MessagingChannelHeader } from '../../components';
-import { useGiphyContext } from '../../context';
-import type { StreamChatGenerics } from '../../types';
+import { MessagingChannelHeader } from "../../components";
+import { useGiphyContext } from "../../context";
+import type { StreamChatGenerics } from "../../types";
 
 export type ChannelInnerProps = {
   toggleMobile: () => void;
@@ -24,11 +23,13 @@ const ChannelInner = (props: ChannelInnerProps) => {
 
   const { sendMessage } = useChannelActionContext<StreamChatGenerics>();
 
-  const overrideSubmitHandler = (message: MessageToSend<StreamChatGenerics>) => {
+  const overrideSubmitHandler = (
+    message: MessageToSend<StreamChatGenerics>
+  ) => {
     let updatedMessage;
 
-    if (message.attachments?.length && message.text?.startsWith('/giphy')) {
-      const updatedText = message.text.replace('/giphy', '');
+    if (message.attachments?.length && message.text?.startsWith("/giphy")) {
+      const updatedText = message.text.replace("/giphy", "");
       updatedMessage = { ...message, text: updatedText };
     }
 
@@ -54,19 +55,21 @@ const ChannelInner = (props: ChannelInnerProps) => {
       };
 
       const sendMessagePromise = sendMessage(messageToSend);
-      logChatPromiseExecution(sendMessagePromise, 'send message');
+      logChatPromiseExecution(sendMessagePromise, "send message");
     }
 
     setGiphyState(false);
   };
 
-  const actions = ['delete', 'edit', 'flag', 'mute', 'react', 'reply'];
+  const actions = [] as "delete"[]; // ['delete', 'edit', 'flag', 'mute', 'react', 'reply'];
 
   return (
     <>
       <Window>
         <MessagingChannelHeader theme={theme} toggleMobile={toggleMobile} />
-        <MessageList messageActions={actions} />
+        <div style={{ maxHeight: 400 }}>
+          <MessageList messageActions={actions} />
+        </div>
         <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />
       </Window>
       <Thread />
